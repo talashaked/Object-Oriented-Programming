@@ -1,0 +1,76 @@
+tal.shaked3
+
+
+
+=============================
+=      File description     =
+=============================
+SimpleHashSet.java - this abstract class defines a simple Hash set, designed with an abstract
+                    capacity function.
+OpenHashSet.java - extends the simpleHashSet class. creates an array of linked lists, tries to mimic
+                    the java openHashSet collection.
+ClosedHashSet.java - extends to simpleHashSet class. creates an array of strings, tries to mimic the java
+                    ClosedHashSet collection.
+CollectionFacadeSet.java - this class wraps a collection set
+SimpleSetPerformanceAnalyzer - a test function files, already set with default inputs to check upon.
+                                these tests are set to run equal test on different data set,
+                                in order to check run times of the add function and the contain function.
+README - the readme file
+RESULTS - the results comparison of the given tests on each of the required inputs
+LinkedListWrapper.java - this class wraps java's linked list collection.
+=============================
+=          Design           =
+=============================
+Special design decisions -
+1. LinkedListWrapper - i chose to implement the array of the open hash set with a linkedListWrapper object
+   in each index. This wrapper when initialized creates its own linked list object, and then implements functions
+   that returns information about it, by using the linked list functions inside the class.
+2. the String final method kept by the class - in order to tag removed cells. more info in the Answer section.
+3. resize map - In the closedHashSet - i chose to implement a resize, so that the array object kept in the class is copied,
+                                    and then a new array is defined, by the new capacity given. Afterwards the same function
+                                    adds all items to the new array created.
+               in the OpenHashSet - i chose to implement a resize, in a different method. i created a new string array, in
+               the length of the objects array size, and filled it in in all the strings that were kept in the set.
+               then created a new array for the object, and filled all the strings inside. i guess that if i had more time
+               i would of chosen a more consistant and elegant way - which is in my opinion the one i implemented in the
+               closedHashSet.
+=============================
+=  Implementation details   =
+=============================
+In order to save some time in the closedSet loops, i chose to implement a "findOptimalIndex" function,
+which goes over the array, keeps the first 'removeTag' appearance, and then returns a relevant index once - the
+strings' actual index if exists, or if not the index kep from before (when reaching a first removeTag).
+This saved some running time, and made the code a bit less complex to comprehend and moe changeable as well.
+The findOptimalIndex method is used by my contain func,add func and remove func, in order to run as less loops over the as
+possible.
+
+=============================
+=    Answers to questions   =
+=============================
+1. OpenHashSet's table was implemented with the linkedListWrapper (explained about in the design section).
+    I found linked list the most sufficient way to construct the openHashSet.
+2. The Deletion Mechanism in the ClosedHashSet - in order to go over each index to be certain an object isn't already
+    in the list, there were some options i thought about. the first was to do a 2-length array object, consisting
+    of a private attribute which is actually a tag with information about the cell status. In my opinion this design is
+    a bit more modular than the one i chose eventually. Eventually i chose to implement the design of a static member in
+    the class, which saves more space than my first idea, and this static member tags the cell by its
+    current status (i used this to see if a cell was filled was an object before).
+3.the bad results for the openhashset and closedhashSet set on the dataset1 occured because of the same hash code.
+    it is given that all strings in dataset1 have the same hash code.
+    each string in the data set has the same hash, and there fore when adding to the closed,they all map out to the same
+     each time which takes more time. When adding to the open, they are all added to the same list and therefore it isnt
+     much of time, but afterwards to search the contain inquires much more time than a more elegant distribution of strings.
+     The strength of the closed data set is space, and running time when searching for contain. The weakness
+     is for equal hashes for items - it has long running times. it depends on having unique hashes for objects.
+     My implementations compared to java's hashSet - mine is slower, and from a quick look it seems that at least
+     in the closed hash set there is a static member kept in the class as well. I guess most of the function are more
+     efficient than mine, and try to make it as less time consuming as possible, but that the main ideas are more or less
+     the same. This is mainly because for instance to add an object to the closedHashSet, you have to first find if its contained,
+     than resize the set, than find a new index for it, and there is no way i can think of to skip over one of those processes.
+     The openHashSet and the closedHashSet are different than each other in the hashcodes basis - the openHash is based on
+     the hashcode, but if you have a not well distributed list to put inside it, the complexity of it will be the same as any other list,
+     On the other hand, the closed HashSet will find it more complex and therefore the algorithms will consume more time
+     to map an equal distribution of hashes set. in the remove section - the advantage is in the favor of the closed if the
+     item hash distribution is well, and otherwise the advantage is in the favour of the openHashset, or even they have
+     a more or less same running time. in the contains -the same as adds occur.
+
