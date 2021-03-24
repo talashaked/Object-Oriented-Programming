@@ -1,0 +1,64 @@
+tal.shaked3
+
+
+
+=============================
+=      File description     =
+=============================
+Comparators Package -
+ - lettersComparator.java - this class creates a comparator, comparing object files by abc letters
+ - sizeComparator.java - this class creates a comparator, comparing object files by their sizes
+ - typeComparator.java - this class creates a comparator, comparing object files by their types.
+Exceptions package
+ - badInputException.java - an exception class, creates an exception for when the args given aren't as expected.
+ - badSubSectionNameException.java - this class creates an exception that represents a bad section name.
+ - ValueException.java - this class creates an exception of a bad input as a value of the filter method,
+                        or order method.
+ - filters package -
+    - Booleans -
+        - executableFilter
+        - hiddenFilter
+        -writableFilter
+    - Doubles-
+        - greaterThanFilter
+        - smallerThanFilter
+    - Strings-
+        - containsFilter
+        - fileFilter
+        - prefixFilter
+        -suffixFilter
+    allFilter
+    BetweenFilter
+    BooleanFilters
+    OneDoubleFilters
+    StringFilters
+    FilterInterface
+ - commandFileParser
+ - DirectoryProcessor
+ - filterArgsWrapper
+ - orderArgsWrapper
+ - loadComparators
+ - loadFilters
+ - sectionProcessor
+ - sortingArray
+=============================
+=          Design           =
+=============================
+the program is built by running through a main star method (the DirectoryProcessor) all of the other methods.
+after inserting 2 args as an input, a directory processor is called and created.
+then, after checking all inputs are valid, are parser is called, to parse the command file given so it will be readable.
+the parser (commandFileParser) uses the factories (both filter and order), and by comparing them,
+runs through the command file converted-to-string lines and processes them into section objects each,
+then returning back to the DirectoryProcessor the section array.
+then the section array is processed also from the DirectoryProcessor, calling each section to be
+processed - which actually mean to filter the directory given in the beginning, then sort it as required
+and then print it out.
+=============================
+=  Implementation details   =
+=============================
+so that is would be modular, i created all filter and comparators seperately,
+and inserted them into a hash map. then created them all by enum in a factory.
+now all that is neede in order to add a new filter or order, is to add it to the factory enum values,
+and add a relevant filter method and order method and the program will add it without any more additions.
+the parser is run by running a loop over the strings, keeping an eye on a fixer index, which always fixes the index
+into a perfect command line (built by 4-section-lines each).
