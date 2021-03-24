@@ -1,0 +1,79 @@
+tal.shaked3
+
+
+
+=============================
+=      File description     =
+=============================
+BoopingSite.java - The booping site class, creates a boopingsite object consisting of a hotels array.
+BoopingSiteTest.java - this file contains all the booping site tests.
+HotelDistanceComparator.java - this class implements the comparator, by the function compare - comparing
+    items by their proximity from an onject.
+HotelRankingComparator.java - this class implements the comparator, by the function compare - comparing
+    items by their star ranking.
+GeneralLocker.java - this abstract class defines a general locker and certain general attributes.
+Locker.java - this class implements the GeneralLocker class, and creates a locker defined by an input
+    capacity.
+LongTermStorage.java - this class implements as well the general locker class, and creates a long
+    term storage locker.
+LongTermTest.java - this class consists of tests on the LongTermStorage functions.
+LockerTest.java - this class consists of tests on the Locker functions.
+SpaceshipDepositoryTest.java - this class adds all the LongTerm and Locker tests to one run file.
+
+=============================
+=          Design           =
+=============================
+First part - Spaceship Lockers:
+    the design of the classes i chose to do is first to create a general locker class, which will serve
+    as a general basis to all other lockers. In the general locker class their is a basic map object
+    the each locker must consist, and its capacity is determined by an input. in addition their are functions regarding
+    to it, and an abstract class of additem that must be implemented in each extending class.
+    the locker and the longtermstorage classes both extend the general locker.
+    in addition, the locker class has as a static final object a longtermlocker object.
+    In the tests their aren't much design issues.
+Second Part - Booping Site:
+    the booping site class creates a booping site object, with an array of hotels. there are a couple of
+    general functions, such as filtering hotels by city, or checking valid longitude and latitudes of
+    coordinates that are sent as inputs.
+Generics - Comparators
+    in addition i built two comparators, both comparing 2 hotel objects.
+    the first, HotelDistanceComparator, is to be created with a latitude and proximity that is used as
+    a relative location. then the comparator uses the function compare to sort between hotels by their
+    proximity from the objects' location.
+    The second, HotelRankingComparator, is to be created with no constructor, and sorts between 2 hotels
+    putting the one with more star ranks before.
+
+=============================
+=  Implementation details   =
+=============================
+Special implementation ponts -
+ Sum of Items (in the locker class):
+    instead of summing all items in the map of the object each time, i chose to keep a sum indicator, which is updated
+    each time i remove items or add them.
+ Booping site general functions:
+    instead of creating 3 big functions that each do pretty much of the same sorting, i chose to write 3 big general
+    functions which are usable to sort by proximity, to sort by star ranks, to filter and to check validity of the
+    longitude and latitude inputs.
+
+=============================
+=    Answers to questions   =
+=============================
+1+2. How did you choose to store the information in the locker an in the longTermStorage? why did you prefer it to
+ other methods?
+    i chose to keep the items in the storage of each locker in a hashmap, so that each item type will be matched to its
+    current quantity in the locker. in addition, the hashmap provides certain functions such as reset,removekey and a
+    quick adjusting to the items in the map, which reserves running time in the functions.
+3. getHotelsInCityByRating design decisions:
+    I designed this function by seperating the filtering function. In the filtering function i altered the array into
+    a new ArrayList, and then filtered the array, using its unique attributes to create an array without defining in advance
+    its capacity.
+    after filtering the function returns the filtered array, and all thats left is to sort the remaining hotels according
+    to the comparator.
+4. getHotelsByProximity:
+    because of duplication between the sorting in this function and in the next one (which takes into consideration the city)
+    i seperated the sorting action do a different function which sorts a given array by proximation, and returns
+    the new sorted list.
+5. getHotelsInCityByProximity:
+    in this case i used the sorting function (filterHotelsByCity) at first, and then sorted the remaining
+    hotels in the list by their proximating, using the comparator created in the "sort by proximating"
+    function.
